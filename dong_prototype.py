@@ -30,7 +30,6 @@ labels = sc.fit_predict(X)
 # u, indices = np.unique(labels, return_index=True)
 # plt.bar(u, indices)
 
-#TODO: classification result should be a  
 class MLP(nn.Module):
     def __init__(self, dim, n_class):
         super(MLP, self).__init__()
