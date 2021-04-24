@@ -5,11 +5,13 @@ import falconn
 
 if __name__ == '__main__':
 
+    # Read the first N lines
+    sample_lines = 10000
     with open('falconn/dataset/glove.840B.300d.txt', 'r')as myfile:
-        head = [next(myfile) for x in range(10000)]
-    # print(head)
-    len(head)
+        head = [next(myfile) for x in range(sample_lines)]
+    print(len(head))
 
+    # Convert to numpy data
     all_lines = []
     for line in head:
         row = [float(x) for x in line.split()[1:]]
@@ -17,22 +19,16 @@ if __name__ == '__main__':
     all_lines = np.array(all_lines)
     dataset = all_lines
 
-    # dataset_file = 'dataset/glove.840B.300d.npy'
     number_of_queries = 1000
     # we build only 50 tables, increasing this quantity will improve the query time
     # at a cost of slower preprocessing and larger memory footprint, feel free to
     # play with this number
     number_of_tables = 50
 
-    # print('Reading the dataset')
-    # dataset = np.load(dataset_file)
-    # print('Done')
-
     # It's important not to use doubles, unless they are strictly necessary.
     # If your dataset consists of doubles, convert it to floats using `astype`.
     # assert dataset.dtype == np.float32
     assert dataset.dtype == np.float64
-
 
     # Normalize all the lenghts, since we care about the cosine similarity.
     print('Normalizing the dataset')
