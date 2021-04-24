@@ -1,34 +1,50 @@
-from __future__ import print_function
 import numpy as np
 import timeit
 import falconn
+import pandas as pd
+
+from __future__ import print_function
+from embeddings.utils import get_pretrained_embeddings
 
 if __name__ == '__main__':
 
+    # # Read the first N lines
+    # sample_lines = 1000
+    # with open('falconn/dataset/glove.840B.300d.txt', 'r')as myfile:
+    #     head = [next(myfile) for x in range(sample_lines)]
+    # print(len(head))
+    #
+    # # Convert to numpy data
+    # all_lines = []
+    # for line in head:
+    #     row = [float(x) for x in line.split()[1:]]
+    #     all_lines.append(row)
+    # all_lines = np.array(all_lines)
+    # dataset = all_lines
+
     # Read the first N lines
-    sample_lines = 10000
-    with open('falconn/dataset/glove.840B.300d.txt', 'r')as myfile:
-        head = [next(myfile) for x in range(sample_lines)]
-    print(len(head))
+    sample_lines = 1000
+    cap = 100
+    df = pd.read_csv('data/algo_proj.csv')
+    df = df.head(sample_lines)
+    abstracts = df['abstract'].to_numpy()
+    abstracts = [str(x) for x in abstracts]
+    # lengths = [len(x) for x in abstracts]
+    # abstracts_capped = [x[0:cap] for x in abstracts]
+    model_name = 'paraphrase-distilroberta-base-v1'
+    embeddings = get_pretrained_embeddings(model_name, abstracts)
+    dataset = embeddings
 
-    # Convert to numpy data
-    all_lines = []
-    for line in head:
-        row = [float(x) for x in line.split()[1:]]
-        all_lines.append(row)
-    all_lines = np.array(all_lines)
-    dataset = all_lines
-
-    number_of_queries = 1000
+    number_of_queries = 100
     # we build only 50 tables, increasing this quantity will improve the query time
     # at a cost of slower preprocessing and larger memory footprint, feel free to
     # play with this number
-    number_of_tables = 50
+    number_of_tables = 20
 
     # It's important not to use doubles, unless they are strictly necessary.
     # If your dataset consists of doubles, convert it to floats using `astype`.
     # assert dataset.dtype == np.float32
-    assert dataset.dtype == np.float64
+    assert dataset.dtype == np.float32
 
     # Normalize all the lenghts, since we care about the cosine similarity.
     print('Normalizing the dataset')
