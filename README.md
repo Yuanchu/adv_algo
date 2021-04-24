@@ -1,7 +1,4 @@
 # adv_algo
-story.txt is the file used for word embedding
-Requirements:
-Glove file was built with Python 3.6, PyTorch, and NLTK. Matplotlib was used for visualization.
-Glove model can be trained with:
-```python3 glove.py```
+- **embeddings** contains utility functions to construct vectors out of sentences, from pretrained models.
+- **falconn** contains the Falconn implementation of LSH as a baseline comparison.
 
