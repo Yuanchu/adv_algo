@@ -27,6 +27,15 @@ def train_word_embeddings(sentence, embedding_size,
                           train_body_len = 3,
                           train_ratio = 0.001,
                           train_batch_len = 20):
+    """
+    :param sentence: a single sentence (string)
+    :param embedding_size: how many digits to represent a word
+    :param train_iter: how many iterations to run the torch optimzation
+    :param train_body_len: train param
+    :param train_ratio: train learning rate
+    :param train_batch_len: batch size
+    :return:
+    """
 
     # Create vocabulary, word lists, and word to index mapping
     word_list = word_tokenize(sentence)
