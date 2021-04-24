@@ -1,8 +1,6 @@
 from __future__ import print_function
 import numpy as np
-import falconn
 import timeit
-import math
 
 if __name__ == '__main__':
     dataset_file = 'dataset/glove.840B.300d.npy'
