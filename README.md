@@ -18,3 +18,5 @@ This repo provides helpful utility methods to create embeddings for words and se
 - **embeddings** contains utility functions to construct vectors out of sentences, from pretrained sentence embedding models based on SBERT, Reimers and Gurevych (2019).
 - **falconn** contains the Falconn implementation of LSH as a baseline comparison.
 - **hnsw** contains the implementation of Hierachical Navigable Small World (HNSW) algorithm based on Malkov and Yashunin (2020)
+- **dong_prototype** contains the implementation of Neural LSH. 
+- **data** contains a sample data csv. 
