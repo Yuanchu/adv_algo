@@ -1,10 +1,8 @@
 import numpy as np
 import timeit
 import falconn
-import pandas as pd
 
 from __future__ import print_function
-from embeddings.utils import get_pretrained_embeddings
 
 
 def get_model_param():
@@ -29,33 +27,21 @@ def get_model_param():
 if __name__ == '__main__':
 
     # Read the first N lines
-    sample_lines = 1000
-    cap = 100
-    df = pd.read_csv('data/algo_proj.csv')
-    df = df.head(sample_lines)
-    abstracts = df['abstract'].to_numpy()
-    abstracts = [str(x) for x in abstracts]
-    model_name = 'paraphrase-distilroberta-base-v1'
-    embeddings = get_pretrained_embeddings(model_name, abstracts)
-    dataset = embeddings
+    embeddings_file = 'data/embedding.npy'
+    dataset = np.load(embeddings_file)
 
-    number_of_queries = 100
-    number_of_tables = 20
+    number_of_queries = 1000
+    number_of_tables = 50
 
-    # Normalize all the lenghts, since we care about the cosine similarity.
-    print('Normalizing the dataset')
-    dataset /= np.linalg.norm(dataset, axis=1).reshape(-1, 1)
-    print('Done')
-
-    # Choose random data points to be queries.
-    print('Generating queries')
-    np.random.seed(4057218)
+    # Normalize the lengths, since we care about the cosine similarity,
+    # and split between train and query datasets
+    dataset /= np.linalg.norm(dataset, axis = 1).reshape(-1, 1)
+    np.random.seed(20210421)
     np.random.shuffle(dataset)
     queries = dataset[len(dataset) - number_of_queries:]
     dataset = dataset[:len(dataset) - number_of_queries]
-    print('Done')
 
-    # Perform linear scan using NumPy to get answers to the queries.
+    # Perform linear scan using NumPy to get ground truths to the queries.
     print('Solving queries using linear scan')
     t1 = timeit.default_timer()
     answers = []
