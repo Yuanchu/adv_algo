@@ -6,6 +6,26 @@ import pandas as pd
 from __future__ import print_function
 from embeddings.utils import get_pretrained_embeddings
 
+
+def get_model_param():
+    """
+    :return: Return model paramter object.
+    """
+    params_cp = falconn.LSHConstructionParameters()
+    params_cp.dimension = len(dataset[0])
+    params_cp.lsh_family = falconn.LSHFamily.CrossPolytope
+    params_cp.distance_function = falconn.DistanceFunction.EuclideanSquared
+    params_cp.l = number_of_tables
+    # we set one rotation, since the data is dense enough,
+    # for sparse data set it to 2
+    params_cp.num_rotations = 1
+    params_cp.seed = 5721840
+    # we want to use all the available threads to set up
+    params_cp.num_setup_threads = 0
+    params_cp.storage_hash_table = falconn.StorageHashTable.BitPackedFlatHashTable
+    return params_cp
+
+
 if __name__ == '__main__':
 
     # # Read the first N lines
@@ -77,18 +97,9 @@ if __name__ == '__main__':
     queries -= center
     print('Done')
 
-    params_cp = falconn.LSHConstructionParameters()
-    params_cp.dimension = len(dataset[0])
-    params_cp.lsh_family = falconn.LSHFamily.CrossPolytope
-    params_cp.distance_function = falconn.DistanceFunction.EuclideanSquared
-    params_cp.l = number_of_tables
-    # we set one rotation, since the data is dense enough,
-    # for sparse data set it to 2
-    params_cp.num_rotations = 1
-    params_cp.seed = 5721840
-    # we want to use all the available threads to set up
-    params_cp.num_setup_threads = 0
-    params_cp.storage_hash_table = falconn.StorageHashTable.BitPackedFlatHashTable
+    # Get model paramter
+    params_cp = get_model_param()
+
     # we build 18-bit hashes so that each table has
     # 2^18 bins; this is a good choise since 2^18 is of the same
     # order of magnitude as the number of data points
