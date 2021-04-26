@@ -28,20 +28,6 @@ def get_model_param():
 
 if __name__ == '__main__':
 
-    # # Read the first N lines
-    # sample_lines = 1000
-    # with open('falconn/dataset/glove.840B.300d.txt', 'r')as myfile:
-    #     head = [next(myfile) for x in range(sample_lines)]
-    # print(len(head))
-    #
-    # # Convert to numpy data
-    # all_lines = []
-    # for line in head:
-    #     row = [float(x) for x in line.split()[1:]]
-    #     all_lines.append(row)
-    # all_lines = np.array(all_lines)
-    # dataset = all_lines
-
     # Read the first N lines
     sample_lines = 1000
     cap = 100
