@@ -35,22 +35,12 @@ if __name__ == '__main__':
     df = df.head(sample_lines)
     abstracts = df['abstract'].to_numpy()
     abstracts = [str(x) for x in abstracts]
-    # lengths = [len(x) for x in abstracts]
-    # abstracts_capped = [x[0:cap] for x in abstracts]
     model_name = 'paraphrase-distilroberta-base-v1'
     embeddings = get_pretrained_embeddings(model_name, abstracts)
     dataset = embeddings
 
     number_of_queries = 100
-    # we build only 50 tables, increasing this quantity will improve the query time
-    # at a cost of slower preprocessing and larger memory footprint, feel free to
-    # play with this number
     number_of_tables = 20
-
-    # It's important not to use doubles, unless they are strictly necessary.
-    # If your dataset consists of doubles, convert it to floats using `astype`.
-    # assert dataset.dtype == np.float32
-    assert dataset.dtype == np.float32
 
     # Normalize all the lenghts, since we care about the cosine similarity.
     print('Normalizing the dataset')
@@ -83,12 +73,8 @@ if __name__ == '__main__':
     queries -= center
     print('Done')
 
-    # Get model paramter
+    # Get and set the model parameter object
     params_cp = get_model_param()
-
-    # we build 18-bit hashes so that each table has
-    # 2^18 bins; this is a good choise since 2^18 is of the same
-    # order of magnitude as the number of data points
     falconn.compute_number_of_hash_functions(18, params_cp)
 
     print('Constructing the LSH table')
