@@ -26,7 +26,8 @@ def get_model_param():
 
 if __name__ == '__main__':
 
-    # Read the first N lines
+    # This assumes your embedding numpy file exists under 'data/embedding.npy'
+    # Please check the assumption before running the script
     embeddings_file = 'data/embedding.npy'
     dataset = np.load(embeddings_file)
 
